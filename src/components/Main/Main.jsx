@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Route, Routes } from 'react-router-dom';
-// import AddNewsFrom from './AddNewsForm/AddNewsForm';
+import ListNews from './Home/ListNews/ListNews';
+import Form from './Home/Form/Form';
 import Home from './Home';
-// import NewsList from './NewsList';
 
 
 
@@ -15,8 +15,8 @@ class Main extends Component {
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Home />} path="/home" />
-        {/*<Route element={<AddNewsFrom />} path="/form" />*/}
-        {/*<Route element={<NewsList />} path="/list" />*/}
+        <Route element={<ListNews />} path="/list" />
+        <Route element={<Form />} path="/form" />
 
       </Routes>
 
