@@ -1,29 +1,32 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import Nav from "./Nav/Nav";
-import { userContext } from "../../context/userContext";
+import {userContext} from "../../context/userContext";
 
 export class Header extends Component {
-  render() {
-    return (
-        <header className="header">
-          <Nav />
-          <div className="user">
-            <userContext.Consumer>
-              {({ user, logout }) => {
-                if (user) {
-                  return (
-                      <>
-                        <p>Hola, {user}</p>
-                        <button onClick={logout}>Logout</button>
-                      </>
-                  );
-                }
-              }}
-            </userContext.Consumer>
-          </div>
-        </header>
-    );
-  }
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            user: ""
+        }
+    }
+
+    static contextType = userContext;
+
+    render() {
+        return <header>
+                <Nav/>
+                    <userContext.Consumer>
+                        {(value) => value.user?
+                            <>
+                                <p>Hola, {value.user}</p>
+                                <button onClick={value.logout}>Logout</button>
+                            </>
+                            : ""
+                        }
+                    </userContext.Consumer>
+            </header>;
+    }
 }
 
 export default Header;

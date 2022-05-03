@@ -1,51 +1,50 @@
 import "./App.css";
-import React from "react";
+import {useState} from "react";
 import Header from "./components/Header";
 import Main from "./components/Main";
+import { BrowserRouter } from 'react-router-dom';
 import Footer from "./components/Footer";
-import { BrowserRouter } from "react-router-dom";
+import {userContext} from "./context/userContext";
 
-import { userContext } from "./context/userContext";
+function App() {
 
-// import { v4 as uuidv4 } from "uuid";
-// uuidv4();
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: "",
-    };
-    //logout
-    this.logout = this.logout.bind(this);
-    this.login = this.login.bind(this);
-  }
-  logout() {
-    this.setState("");
-  }
+    const [user, setUser] = useState("");
+    const [news, setNews] = useState([]);
 
-  login(name) {
-    this.setState({ user: name });
-  }
+    const login = (user) => {
+        setUser(user)
+    }
 
-  render() {
+    const logout = () => {
+        setUser("")
+    }
+
+    const addMyNews = (nieuwNieuws) => {
+        console.log("saved news", news.length);
+        console.log("news to save", nieuwNieuws);
+        setNews([ ...news, nieuwNieuws ]);
+        console.log(news.length)
+
+    }
+
     const data = {
-      user: this.state.user,
-      logout: this.logout,
-      login: this.login,
-    };
+        login,
+        logout,
+        user,
+        addMyNews
+    }
 
     return (
         <div className="App">
-          <BrowserRouter>
-            <userContext.Provider value={data}>
-              <Header></Header>
-              <Main></Main>
-            </userContext.Provider>
-          </BrowserRouter>
-          <Footer></Footer>
+            <BrowserRouter >
+                <userContext.Provider value={data}>
+                    <Header />
+                    <Main />
+                </userContext.Provider>
+            </BrowserRouter>
+            <Footer />
         </div>
     );
-  }
 }
 
 export default App;

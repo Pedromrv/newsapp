@@ -6,8 +6,8 @@ class Nav extends Component {
     render() {
         return <nav>
             <Link to='/home'>Home</Link>
-            <Link to='/list'>News List</Link>
-            <Link to='/form'>Add News</Link>
+            <Link to='/list'>Lista de noticias</Link>
+            <Link to='/form'>Añadir noticia</Link>
         </nav>;
     }
 }

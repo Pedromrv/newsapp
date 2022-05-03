@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import NewsCard from './Card/Card'
+import React, {Component} from "react";
+import Card from './Card/Card'
 import axios from "axios";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
-const NYT_API_KEY = process.env.REACT_NYT_API_KEY
+const API_KEY = process.env.REACT_APP_NY_KEY;
 
 
 class ListNews extends Component {
@@ -12,16 +12,19 @@ class ListNews extends Component {
 
         this.state = {
             user: '',
-            news: []
+            load: [],
+            news: this.props.news
         }
     }
 
     async componentDidMount() {
         try {
-            const apiNewsQuery = await axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=${NYT_API_KEY}`);
+            const apiNewsQuery = await axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Sports&api-key=${API_KEY}`);
             const fiveNewsPreload = apiNewsQuery.data.response.docs.slice(0, 5);
-            this.setState({ news: fiveNewsPreload })
-            console.log(fiveNewsPreload)
+            this.props.news === []
+                ?this.setState({ load: fiveNewsPreload})
+                :this.setState({load: this.state.news.concat(fiveNewsPreload)})
+
         } catch (err) {
             console.log(err)
         }
@@ -30,9 +33,9 @@ class ListNews extends Component {
 
     render() {
         return <div>
-            <h1>Our news</h1>
+            <h1>Noticias</h1>
             <section>
-                {this.state.news.map(news => <NewsCard value={news} key={uuidv4()} />)}
+                {this.state.load.map(news => <Card value={news} key={uuidv4()}/>)}
             </section>
 
         </div>;
